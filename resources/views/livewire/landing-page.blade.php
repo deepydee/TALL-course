@@ -33,7 +33,12 @@ x-data="{
         wire:submit.prevent="subscribe">
             <x-input class="px-5 py-3 w-80 border border-blue-400" type="email" name="email" wire:model="email" placeholder="Email address"></x-input>
             <span class="text-gray-100 text-xs mt-2">
-                We will send you a confirmation email
+                @if ($errors->has('email'))
+                    {{$errors->first('email')}}
+                @else
+                    We will send you a confirmation email
+                @endif
+                
             </span>
             <x-button class="px-5 py-3 mt-5 w-80 bg-blue-500 justify-center"
             
