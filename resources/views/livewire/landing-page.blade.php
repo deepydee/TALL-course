@@ -45,4 +45,18 @@ x-data="{
             </form>
         </div>
     </div>
+
+    <div class="flex fixed top-0 bg-gray-900 bg-opacity-60 items-center w-full h-full"
+    x-show="showSubscribe"
+    x-on:click.self="showSubscribe = false"
+    x-on:keydown.escape.window="showSubscribe = false"
+    >
+        <div class="m-auto bg-green-500 shadow-2xl rounded-xl p-8">
+            <p class="animate-pulse text-white text-9xl font-extrabold text-center">&check;</p>
+            <p class="text-white text-5xl font-extrabold text-center mt-16">Great!</p>
+            <p class="text-white text-3xl text-center">See you in your inbox</p>
+        </div>
+
+    </div>
+
 </div>
