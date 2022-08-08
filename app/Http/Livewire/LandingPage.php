@@ -3,8 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Subscriber;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Livewire\Component;
+use PharIo\Version\VersionNumber;
 
 class LandingPage extends Component
 {
@@ -17,9 +21,24 @@ class LandingPage extends Component
     public function subscribe()
     {
         $this->validate();
-        $subscriber = Subscriber::create([
+
+        DB::transaction(function() {
+            $subscriber = Subscriber::create([
             'email' => $this->email,
-        ]);
+            ]);
+            $notification = new VerifyEmail;
+            $notification->createUrlUsing(function ($notifiable) {
+                return URL::temporarySignedRoute(
+                    'subscibers.verify',
+                    now()->addMinutes(30),
+                    [
+                        'subscriber' => $notifiable->getKey(),
+                    ],
+                );
+            });
+
+            $subscriber->notify($notification);
+        }, 5);
 
         $this->reset('email');
     }
