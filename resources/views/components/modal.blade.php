@@ -4,6 +4,7 @@
 x-show="{{$trigger}}"
 x-on:click.self="{{$trigger}} = false"
 x-on:keydown.escape.window="{{$trigger}} = false"
+x-cloak
 >
     <div {{$attributes->merge(['class' => 'm-auto bg-pink-500 shadow-2xl rounded-xl p-8'])}}>
       {{$slot}}
